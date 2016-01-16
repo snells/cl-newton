@@ -38,7 +38,7 @@
     (setf (c-aref initial-tm 10 :float) 1.0)
     (setf (c-aref initial-tm 15 :float) 1.0)
     
-    (setf body (newton-create-body world collision initial-tm))
+    (setf body (newton-create-dynamic-body world collision initial-tm))
 
     (newton-body-set-force-and-torque-callback body (callback 'apply-force))
     (newton-body-set-mass-matrix body 10.0 1.0 1.0 1.0)
