@@ -3,11 +3,16 @@
 (use-package :cl-newton-ffi)
 
 
+
 (defcallback apply-force :void
     ((body :pointer)
      (step :float)
      (index :int))
-  (declare (ignore step index))
+  ;(declare (ignore step index))
+
+    (format t "apply-force callback called with params body ~a step ~a index ~a~%"
+	    body step index)
+    ;; macro that frees allocated memory automatically
   (with-many-alloc ((force :float 4)
 		    (mass :float)
 		    (x :float)
@@ -44,13 +49,17 @@
     (newton-body-set-mass-matrix body 10.0 1.0 1.0 1.0)
 
     (dotimes (x 100)
+      (print "calling world update")
       (newton-update world (coerce (/ 1 60) 'single-float))
+      ;; macro that frees allocated memory automatically
       (with-alloc (tm :float 16)
+	(print "getting body matrix")
 	(newton-body-get-matrix body tm)
-	(format t "~a, position = ~a, ~a, ~a~%" x
+	(format t "~&iteration ~a, position = ~a, ~a, ~a~%" x
 		(c-aref tm 12 :float)
 		(c-aref tm 13 :float)
 		(c-aref tm 14 :float))))
 
     (newton-destroy-all-bodies world)
-    (newton-destroy world)))
+    (newton-destroy world)
+    (free initial-tm)))

@@ -5,7 +5,7 @@ cl-autowrap generated bindings for [newton-dynamics](https://github.com/MADEAPPS
 ### Currently does not work   
 The bindings work but the example does not.   
 It worked with newton-dynamics 2.36.   
-I have tried the example in Common Lisp with newton-dynamics-3 with handmade bindings and auto generated but they get stuck, not sure why.   
+I have tried the example in Common Lisp with newton-dynamics-3 with handmade bindings and auto generated but they get stuck on second call to newton-update, not sure why.   
 
 
 
